@@ -1,5 +1,9 @@
 class Solution:
     def maximumUnits(self, boxTypes: List[List[int]], truckSize: int) -> int:
+        
+        # Runtime:  O(n * log(k)) since our heap has size k and we need to pop n times in worst case
+        # Space:    O(k) since out heap has size k
+        
         n = len(boxTypes)
         heap = []
         
