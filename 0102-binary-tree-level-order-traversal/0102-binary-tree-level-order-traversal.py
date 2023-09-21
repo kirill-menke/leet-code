@@ -5,11 +5,12 @@
 #         self.left = left
 #         self.right = right
 from collections import deque
+
+# Time complexity: O(N)
+# Space complexity: O(N)
+
 class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
-        if not root:
-            return []
-
         queue = deque([-1, root])
         result = []
 
@@ -17,6 +18,8 @@ class Solution:
         while len(queue) > 1:
             node = queue.pop()
             
+            if not node:
+                continue
             if node == -1:
                 result.append(tmp)
                 tmp = []
@@ -24,12 +27,10 @@ class Solution:
                 continue
             else:
                 tmp.append(node.val)
-                if node.left:
-                    queue.appendleft(node.left)
-                if node.right:
-                    queue.appendleft(node.right)
+                queue.appendleft(node.left)
+                queue.appendleft(node.right)
 
         if tmp:
             result.append(tmp)
-            
+
         return result
