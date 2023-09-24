@@ -5,22 +5,16 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        return self.isBalancedHelper(root)[0]
-    
-    def isBalancedHelper(self, root):
-        if not root:
-            return (True, -1)
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:        
+        def traverse_postorder(node):
+            if not node:
+                return True, -1
 
-        balanced, height_left = self.isBalancedHelper(root.left)
-        if not balanced:
-            return (False, 0)
+            left_balanced, left_height = traverse_postorder(node.left)
+            right_balanced, right_height = traverse_postorder(node.right)
 
-        balanced, height_right = self.isBalancedHelper(root.right)
-        if not balanced:
-            return (False, 0)
+            balanced = abs(left_height - right_height) < 2 and left_balanced and right_balanced
+            return balanced, 1 + max(left_height, right_height)
+            
 
-        return abs(height_left - height_right) < 2, 1 + max(height_left, height_right)
-
-    
-    
+        return traverse_postorder(root)[0]
