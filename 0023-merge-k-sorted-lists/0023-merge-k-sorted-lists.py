@@ -13,7 +13,6 @@ class Solution:
 
         while heap:
             min_val, idx = heappop(heap)
-            print(min_val, idx)
             
             next_node = ListNode(min_val)
             running.next = next_node
