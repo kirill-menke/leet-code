@@ -3,26 +3,25 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-from heapq import heappop, heappush, heapify
+from heapq import heappush, heappop, heapify
 
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         heap = [(node.val, i) for i, node in enumerate(lists) if node]
         heapify(heap)
-        sentinel = running = ListNode(-1)
+
+        sentinel = current = ListNode(-1)
 
         while heap:
-            min_val, idx = heappop(heap)
+            node_val, idx = heappop(heap)
+            current.next = lists[idx]
+            current = current.next
+
+            if current.next:
+                heappush(heap, (current.next.val, idx))
+                lists[idx] = lists[idx].next
             
-            next_node = ListNode(min_val)
-            running.next = next_node
-            running = next_node
-
-            lists[idx] = lists[idx].next
-            if lists[idx]:
-                heappush(heap, (lists[idx].val, idx))
-
         return sentinel.next
-        
+
 
 
