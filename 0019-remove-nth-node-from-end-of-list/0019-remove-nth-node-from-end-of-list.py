@@ -4,21 +4,18 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def __init__(self):
-        self.count = 0
 
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        def helper(head, n):
-            if not head:
-                return None
-            
-            node = helper(head.next, n)
-            self.count += 1
-
-            if self.count == n + 1:
-                head.next = node.next
-            
-            return head
+        sentinel = slow = fast = ListNode()
+        sentinel.next = head
         
-        new_head = helper(head, n)
-        return new_head if self.count > n else head.next
+        for i in range(n + 1):
+            fast = fast.next
+
+        while fast:
+            slow = slow.next
+            fast = fast.next
+        
+        slow.next = slow.next.next
+
+        return sentinel.next
