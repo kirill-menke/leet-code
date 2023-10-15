@@ -1,13 +1,10 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
+        mem = [0] * (len(nums) + 2)
+
+        for i in range(2, len(nums) + 2):
+            mem[i] = max(mem[i - 1], mem[i - 2] + nums[i - 2])
         
-        @cache
-        def rob_helper(current_idx):
-            if current_idx >= len(nums):
-                return 0
-            if current_idx == len(nums) - 1:
-                return nums[current_idx]
-            
-            return max(nums[current_idx] + rob_helper(current_idx + 2), nums[current_idx + 1] + rob_helper(current_idx + 3))
-    
-        return rob_helper(0)
+        return mem[-1]
+
+        
