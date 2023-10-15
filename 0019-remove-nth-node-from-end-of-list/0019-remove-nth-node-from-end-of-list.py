@@ -4,12 +4,11 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        sentinel = slow = fast = ListNode()
+        sentinel = slow = fast = ListNode(-1)
         sentinel.next = head
-        
-        for i in range(n + 1):
+
+        for _ in range(n + 1):
             fast = fast.next
 
         while fast:
@@ -19,3 +18,4 @@ class Solution:
         slow.next = slow.next.next
 
         return sentinel.next
+        
