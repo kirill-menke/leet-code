@@ -3,26 +3,25 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
 class Solution:
     def oddEvenList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        even_sentinel = even_curr = ListNode(-1)
-        odd_sentinel = odd_curr = ListNode(-1)
+        
+        odd_sentinel, even_sentinel = ListNode(-1), ListNode(-1)
+        odd_head, even_head = odd_sentinel, even_sentinel
+        even = False
 
-        count = 1
         while head:
-            if count % 2 == 0:
-                even_curr.next = head
-                even_curr = even_curr.next
+            if even:
+                even_head.next = head
+                even_head = even_head.next
             else:
-                odd_curr.next = head
-                odd_curr = odd_curr.next
-            
-            next_tmp = head.next
-            head.next = None
-            head = next_tmp
-            count += 1
+                odd_head.next = head
+                odd_head = odd_head.next
 
-        odd_curr.next = even_sentinel.next
-
+            even = not even
+            head = head.next
+        
+        odd_head.next = even_sentinel.next
+        even_head.next = None
+        
         return odd_sentinel.next
