@@ -1,12 +1,14 @@
 class Solution:
     def kthGrammar(self, n: int, k: int) -> int:
-        if n == 1:
-            return 0
-
-        row_length = 2**(n - 1)
-
-        if k > row_length / 2:
-            return 1 - self.kthGrammar(n, k - row_length / 2)
-        else:
-            return self.kthGrammar(n - 1, k)
         
+        def dfs(curr, n, k):
+            if n == 1:
+                return curr
+            
+            nodes_count = 2**(n - 1)
+            if k > nodes_count / 2:
+                return dfs(not curr, n - 1, k - nodes_count / 2)
+            else:
+                return dfs(curr, n - 1, k)
+            
+        return int(dfs(False, n, k))
