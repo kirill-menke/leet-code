@@ -7,10 +7,7 @@ class Solution:
 
         while read < len(nums):
             if nums[read] != 0:
-                nums[write] = nums[read]
+                nums[write], nums[read] = nums[read], nums[write]
                 write += 1
             read += 1
         
-        while write < len(nums):
-            nums[write] = 0
-            write += 1
