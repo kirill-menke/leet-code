@@ -3,26 +3,14 @@ from collections import deque
 class Solution:
     def minKnightMoves(self, x: int, y: int) -> int:
         
-        queue = deque([(0, 0)])
-        visited = set([(0, 0)])
-        neighbors = [(1, 2), (2, 1), (-1, -2), (-2, -1), (1, -2), (-2, 1), (-1, 2), (2, -1)]
-        
-        
-        steps = 0
-        while True:
-            for _ in range(len(queue)):
-                i, j = queue.pop()
-                
-                if (i, j) == (x, y):
-                    return steps
-                
-                for step_x, step_y in neighbors:
-                    next_x, next_y = i + step_x, j + step_y
-
-                    if (next_x, next_y) not in visited:
-                        queue.appendleft((next_x, next_y))
-                        visited.add((next_x, next_y))
+        @cache
+        def dfs(x, y):
+            if x == 0 and y == 0:
+                return 0
+            if x + y == 2:
+                return 2
             
-            steps += 1
-            
-        return -1
+            return min(dfs(abs(x - 2), abs(y - 1)), dfs(abs(x - 1), abs(y - 2))) + 1
+        
+        return dfs(abs(x), abs(y))
+        
