@@ -7,20 +7,13 @@
 
 class Solution:
     def inorderSuccessor(self, root: TreeNode, p: TreeNode) -> Optional[TreeNode]:
-        inorder = []
-        stack = []
-        curr = root
+        successor = None
         
-        while True:
-            if curr:
-                stack.append(curr)
-                curr = curr.left
-            elif(stack):
-                curr = stack.pop()
-                if inorder and inorder[-1] == p:
-                    return curr
-                inorder.append(curr)
-                curr = curr.right
+        while root:
+            if p.val >= root.val:
+                root = root.right
             else:
-                break
+                successor = root
+                root = root.left
         
+        return successor
