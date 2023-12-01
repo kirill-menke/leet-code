@@ -11,7 +11,7 @@ class Solution:
                     helper(current, opened + 1, closed)
                     current.pop()
                 
-                if opened > 0 and closed < opened:
+                if closed < opened:
                     current.append(')')
                     helper(current, opened, closed + 1)
                     current.pop()
